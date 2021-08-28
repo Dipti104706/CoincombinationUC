@@ -1,29 +1,46 @@
 #!/bin/bash -x
 
 read -p "Enter the number of flip you want:" num
-headsCount=0
-tailsCount=0
+HHcount=0
+TTcount=0
+HTcount=0
+THcount=0
 
 for (( i=1; i<=$num; i++ ))
 do	
-	flip=$(($((RANDOM%10))%2))
+	flip=$(($((RANDOM%10))%4))
 	if [ $flip -eq 0 ]
 	then
-		echo "Heads"
-		headsCount=$(($headsCount+1))
+		echo "HH"
+		HHcount=$(($HHcount+1))
+	elif [ $flip -eq 1 ]
+	then
+		echo "TT"
+		TTcount=$(($TTcount+1))
+	elif [ $flip -eq 2 ]
+	then
+		echo "HT"
+		HTcount=$(($HTcount+1))
 	else
-		echo "Tails"
-		tailsCount=$(($tailsCount+1))
+		echo "TH"
+		THcount=$(($THcount+1))
 	fi
 done
-echo "numbers of head is:"$headsCount
-echo "number of tail is::" $tailsCount
+echo "number of HH is:"$HHcount
+echo "number of TT is::"$TTcount
+echo "number of HT is::"$HTcount
+echo "number of TH is::"$THcount
 
-percentageOfHeads=$(($(($headsCount*100))/$num))
-percentageOfTails=$(($(($tailsCount*100))/$num))
+percentageOfHH=$(($(($HHcount*100))/$num))
+percentageOfTT=$(($(($TTcount*100))/$num))
+percentageOfHT=$(($(($HTcount*100))/$num))
+percentageOfTH=$(($(($THcount*100))/$num))
 
-echo "Heads=$percentageOfHeads%"
-echo "Tails=$percentageOfTails%"
+echo "HH=$percentageOfHH%"
+echo "TT=$percentageOfTT%"
+echo "HT=$percentageOfHT%"
+echo "TH=$percentageOfTH%"
 
-dict[singlet]="{Heads=$headsCount:percentage=$percentageOfHeadsTails=$tailsCount:percentage=$percentageOfTails}"
+dict[doublet]="{HH=$HHcount:%=$percentageOfHH TT=$TTcount:%=$percentageOfTT HT=$HTcount:%=$percentageOfHT TH=$THcount:%=$percentageOfTH}"
+
 echo ${dict[@]}
